@@ -38,6 +38,63 @@ export async function HEAD() {
   return new NextResponse(null, { status: 200 });
 }
 
+// 輔助函數：添加延遲
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// 輔助函數：帶重試邏輯的fetch
+async function fetchWithRetry(url: string, options: RequestInit, maxRetries = 3): Promise<Response> {
+  let lastError: Error | null = null;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      // 確保headers存在並添加Connection: keep-alive
+      const headers = {
+        'Content-Type': 'application/json',
+        'Connection': 'keep-alive',
+        ...(options.headers || {})
+      };
+      
+      const response = await fetch(url, {
+        ...options,
+        headers
+      });
+      
+      // 如果不是503錯誤或模型過載錯誤，直接返回
+      if (response.status !== 503) {
+        return response;
+      }
+      
+      // 檢查是否是模型過載錯誤
+      const responseText = await response.text();
+      if (!responseText.includes('model is overloaded')) {
+        // 如果不是模型過載，創建新的Response並返回
+        return new Response(responseText, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers
+        });
+      }
+      
+      console.log(`模型過載，第 ${attempt + 1} 次重試中...`);
+      
+      // 等待時間隨著嘗試次數指數增加 (1秒、2秒、4秒...)
+      const waitTime = Math.pow(2, attempt) * 1000;
+      await delay(waitTime);
+      
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      console.error(`第 ${attempt + 1} 次請求失敗:`, lastError);
+      
+      // 等待時間隨著嘗試次數指數增加
+      const waitTime = Math.pow(2, attempt) * 1000;
+      await delay(waitTime);
+    }
+  }
+  
+  // 如果所有重試都失敗，拋出最後一個錯誤
+  throw lastError || new Error('所有重試請求均失敗');
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -90,8 +147,8 @@ export async function POST(request: NextRequest) {
     console.log('==== SENDING REQUEST TO BACKEND ====');
     console.log(JSON.stringify(payload, null, 2));
     
-    // Forward the request to the actual backend
-    const response = await fetch('http://localhost:8081/chat', {
+    // 使用帶重試邏輯的fetch替代原來的fetch
+    const response = await fetchWithRetry('http://localhost:8081/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +158,7 @@ export async function POST(request: NextRequest) {
     
     console.log('Backend response status:', response.status);
     
-    // Read the response as text first for logging
+    // Read the response as text for logging
     const responseText = await response.text();
     console.log('==== RESPONSE FROM BACKEND ====');
     console.log(responseText);
