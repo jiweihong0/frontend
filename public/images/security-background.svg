@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- 渐变背景 -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    
+    <!-- 小点图案 -->
+    <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="5" r="1" fill="#64748b" opacity="0.3" />
+    </pattern>
+    
+    <!-- 数字雨图案 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- 主背景 -->
+  <rect width="1920" height="1080" fill="url(#bg-gradient)" />
+  
+  <!-- 小点图案覆盖 -->
+  <rect width="1920" height="1080" fill="url(#dots)" />
+  
+  <!-- 安全相关图案 - 六边形网格 -->
+  <g opacity="0.1">
+    <path d="M100,200 L150,225 L150,275 L100,300 L50,275 L50,225 Z" fill="none" stroke="#3b82f6" stroke-width="2" />
+    <path d="M150,225 L200,250 L200,300 L150,325 L100,300 L100,250 Z" fill="none" stroke="#3b82f6" stroke-width="2" />
+    <path d="M100,300 L150,325 L150,375 L100,400 L50,375 L50,325 Z" fill="none" stroke="#3b82f6" stroke-width="2" />
+    <path d="M50,275 L100,300 L100,350 L50,375 L0,350 L0,300 Z" fill="none" stroke="#3b82f6" stroke-width="2" />
+  </g>
+  
+  <!-- 大盾牌图案 (中心偏上) -->
+  <g transform="translate(960, 400) scale(3)" opacity="0.07">
+    <path d="M50,0 C50,0 100,20 100,50 C100,80 75,95 50,100 C25,95 0,80 0,50 C0,20 50,0 50,0 Z" fill="#3b82f6" />
+    <path d="M50,15 C50,15 85,30 85,50 C85,70 65,85 50,90 C35,85 15,70 15,50 C15,30 50,15 50,15 Z" fill="none" stroke="#60a5fa" stroke-width="2" />
+    <path d="M50,40 L60,50 L50,60 L40,50 Z" fill="#60a5fa" />
+  </g>
+  
+  <!-- 数字变换图案 (右侧) -->
+  <g filter="url(#glow)" opacity="0.1">
+    <text x="1600" y="200" font-family="monospace" font-size="14" fill="#60a5fa">10110101</text>
+    <text x="1650" y="220" font-family="monospace" font-size="14" fill="#60a5fa">01001011</text>
+    <text x="1700" y="240" font-family="monospace" font-size="14" fill="#60a5fa">11010010</text>
+    <text x="1600" y="260" font-family="monospace" font-size="14" fill="#60a5fa">01101001</text>
+    <text x="1650" y="280" font-family="monospace" font-size="14" fill="#60a5fa">10010110</text>
+    <text x="1700" y="300" font-family="monospace" font-size="14" fill="#60a5fa">00101101</text>
+  </g>
+  
+  <!-- 数字变换图案 (左侧) -->
+  <g filter="url(#glow)" opacity="0.1">
+    <text x="200" y="800" font-family="monospace" font-size="14" fill="#60a5fa">10110101</text>
+    <text x="250" y="820" font-family="monospace" font-size="14" fill="#60a5fa">01001011</text>
+    <text x="300" y="840" font-family="monospace" font-size="14" fill="#60a5fa">11010010</text>
+    <text x="200" y="860" font-family="monospace" font-size="14" fill="#60a5fa">01101001</text>
+    <text x="250" y="880" font-family="monospace" font-size="14" fill="#60a5fa">10010110</text>
+    <text x="300" y="900" font-family="monospace" font-size="14" fill="#60a5fa">00101101</text>
+  </g>
+  
+  <!-- 连接线图案 -->
+  <g opacity="0.05" stroke="#60a5fa" stroke-width="1">
+    <line x1="500" y1="100" x2="700" y2="200" />
+    <line x1="700" y1="200" x2="900" y2="150" />
+    <line x1="900" y1="150" x2="1100" y2="250" />
+    <line x1="1100" y1="250" x2="1300" y2="200" />
+    <line x1="1300" y1="200" x2="1500" y2="300" />
+    
+    <line x1="500" y1="800" x2="700" y2="750" />
+    <line x1="700" y1="750" x2="900" y2="800" />
+    <line x1="900" y1="800" x2="1100" y2="750" />
+    <line x1="1100" y1="750" x2="1300" y2="800" />
+    <line x1="1300" y1="800" x2="1500" y2="750" />
+  </g>
+</svg> 

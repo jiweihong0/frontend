@@ -60,41 +60,41 @@ const alertsEvolutionData = [
 export default function HomePage() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-8">Security Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-8">安全儀表板</h1>
       
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard 
-          title="Actions" 
+          title="操作" 
           value="1,234" 
-          description="↑ 12% Raise" 
+          description="↑ 12% 增長" 
           icon={<LockKeyhole className="h-8 w-8" />} 
           className="bg-blue-500 text-white" 
           iconClassName="bg-blue-400"
         />
         
         <StatCard 
-          title="Alerts" 
+          title="警報" 
           value="87" 
-          description="↓ 45 High-risk" 
+          description="↓ 45 高風險" 
           icon={<AlertTriangle className="h-8 w-8" />} 
           className="bg-red-500 text-white" 
           iconClassName="bg-red-400"
         />
         
         <StatCard 
-          title="New risks" 
+          title="新風險" 
           value="24" 
-          description="Last year" 
+          description="去年" 
           icon={<TrendingUp className="h-8 w-8" />} 
           className="bg-yellow-500 text-white" 
           iconClassName="bg-yellow-400"
         />
         
         <StatCard 
-          title="Vulnerabilities Fixed" 
+          title="已修復漏洞" 
           value="78%" 
-          description="↑↑ 5% Last Month" 
+          description="↑↑ 5% 上個月" 
           icon={<ShieldCheck className="h-8 w-8" />} 
           className="bg-green-500 text-white" 
           iconClassName="bg-green-400"
@@ -103,43 +103,43 @@ export default function HomePage() {
 
       {/* File Integrity Monitoring Section */}
       <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">File Integrity Monitoring</h2>
+        <h2 className="text-xl font-bold mb-4">檔案完整性監控</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="bg-white p-4 rounded-lg shadow mb-4">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-medium">Alerts by action over time</h3>
+                <h3 className="font-medium">依操作顯示警報隨時間變化</h3>
               </div>
               <div className="flex gap-4 mb-4">
                 <div className="bg-purple-300 rounded p-2 flex-1 text-center">
-                  <p className="text-xs">Modified</p>
+                  <p className="text-xs">已修改</p>
                   <p className="font-bold text-xl">9,669</p>
                 </div>
                 <div className="bg-green-200 rounded p-2 flex-1 text-center">
-                  <p className="text-xs">Added</p>
+                  <p className="text-xs">已新增</p>
                   <p className="font-bold text-xl">50</p>
                 </div>
                 <div className="bg-yellow-200 rounded p-2 flex-1 text-center">
-                  <p className="text-xs">Deleted</p>
+                  <p className="text-xs">已刪除</p>
                   <p className="font-bold text-xl">723</p>
                 </div>
               </div>
             </div>
             
             <CustomAreaChart
-              title="File Changes Over Time"
+              title="檔案變更隨時間推移"
               data={fileIntegrityData}
               areas={[
-                { dataKey: 'modified', stroke: '#9333EA', fill: '#C084FC', name: 'Modified' },
-                { dataKey: 'added', stroke: '#16A34A', fill: '#86EFAC', name: 'Added' },
-                { dataKey: 'deleted', stroke: '#CA8A04', fill: '#FEF08A', name: 'Deleted' }
+                { dataKey: 'modified', stroke: '#9333EA', fill: '#C084FC', name: '已修改' },
+                { dataKey: 'added', stroke: '#16A34A', fill: '#86EFAC', name: '已新增' },
+                { dataKey: 'deleted', stroke: '#CA8A04', fill: '#FEF08A', name: '已刪除' }
               ]}
               xAxisDataKey="time"
             />
           </div>
 
           <DonutChart 
-            title="Top 5 agents"
+            title="前 5 名代理"
             data={fileAgentsData}
             colors={['#15803D', '#22C55E', '#CA8A04', '#FACC15', '#FEF08A']}
           />
@@ -148,48 +148,48 @@ export default function HomePage() {
 
       {/* Threat Hunting Section */}
       <div>
-        <h2 className="text-xl font-bold mb-4">Threat Hunting</h2>
+        <h2 className="text-xl font-bold mb-4">威脅獵捕</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div>
             <div className="bg-white p-4 rounded-lg shadow mb-4">
-              <h3 className="font-medium mb-4">Top 10 Alert level evolution</h3>
+              <h3 className="font-medium mb-4">前 10 名警報等級變化</h3>
               <div className="space-y-2 mb-4">
                 <div>
-                  <p className="text-sm mb-1">Key events:</p>
+                  <p className="text-sm mb-1">關鍵事件：</p>
                   <div className="bg-blue-100 h-4 rounded-full w-full"></div>
                 </div>
                 <div>
-                  <p className="text-sm mb-1">High risk:</p>
+                  <p className="text-sm mb-1">高風險：</p>
                   <div className="bg-red-100 h-4 rounded-full w-1/4"></div>
                 </div>
                 <div>
-                  <p className="text-sm mb-1">Low risk:</p>
+                  <p className="text-sm mb-1">低風險：</p>
                   <div className="bg-green-100 h-4 rounded-full w-3/4"></div>
                 </div>
               </div>
             </div>
             
             <CustomLineChart
-              title="Alert Level Evolution"
+              title="警報等級變化"
               data={alertLevelData}
               lines={[
-                { dataKey: 'keyEvents', stroke: '#3B82F6', name: 'Key Events' },
-                { dataKey: 'highRisk', stroke: '#EF4444', name: 'High Risk' },
-                { dataKey: 'lowRisk', stroke: '#22C55E', name: 'Low Risk' }
+                { dataKey: 'keyEvents', stroke: '#3B82F6', name: '關鍵事件' },
+                { dataKey: 'highRisk', stroke: '#EF4444', name: '高風險' },
+                { dataKey: 'lowRisk', stroke: '#22C55E', name: '低風險' }
               ]}
               xAxisDataKey="time"
             />
           </div>
 
           <DonutChart 
-            title="Top 5 agents"
+            title="前 5 名代理"
             data={threatAgentsData}
             colors={['#3B82F6', '#60A5FA', '#93C5FD', '#FCA5A5', '#FEE2E2']}
           />
         </div>
 
         <CustomLineChart
-          title="Alerts evolution - Top 5 agents"
+          title="警報變化 - 前 5 名代理"
           data={alertsEvolutionData}
           lines={[
             { dataKey: 'pc005', stroke: '#8B5CF6', name: 'PC005_poc5' },

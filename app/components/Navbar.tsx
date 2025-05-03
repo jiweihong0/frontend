@@ -8,14 +8,26 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-blue-600 font-bold text-lg">SecMCP</span>
+              <span className="text-blue-600 font-bold text-lg">Cybersync AI</span>
             </div>
             <div className="ml-6 flex items-center space-x-4">
               <Link href="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
-                Home
+                首頁
               </Link>
               <Link href="/home" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
-                Dashboard
+                儀表板
+              </Link>
+              <Link href="/chat" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
+                Chat
+              </Link>
+              <Link href="/threats" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
+                威脅偵測
+              </Link>
+              <Link href="/assets" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
+                資產清冊
+              </Link>
+              <Link href="/reports" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">
+                安全報告
               </Link>
             </div>
           </div>

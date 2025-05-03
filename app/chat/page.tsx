@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import SecureSuggestions from "./SecureSuggestions";
 
 interface Message {
   role: "user" | "assistant" | "tool";
@@ -310,50 +311,42 @@ export default function ChatPage() {
     }
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+  };
+
   return (
-    <div className="container mx-auto max-w-4xl p-4">
-      <Card className="h-[80vh] flex flex-col">
+    <div className="container py-6 md:py-12">
+      <Card className="mx-auto w-full max-w-4xl min-h-[75vh] flex flex-col">
         <CardHeader>
-          <div className="flex justify-between items-center">
-            <CardTitle>Chat with AI Assistant</CardTitle>
-            
-            {!apiStatus.isAvailable && (
+          <CardTitle className="text-xl">資安助手</CardTitle>
+        </CardHeader>
+        
+        <CardContent className="flex-grow overflow-y-auto">
+          {!apiStatus.isAvailable && (
+            <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md mb-4">
+              <p className="text-sm text-yellow-800">{apiStatus.message}</p>
               <Button 
+                onClick={checkApiStatus} 
                 variant="outline" 
-                size="sm" 
-                onClick={() => checkApiStatus()}
+                className="mt-2 text-xs"
                 disabled={apiStatus.isChecking}
               >
                 {apiStatus.isChecking ? (
                   <>
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                    <ReloadIcon className="mr-2 h-3 w-3 animate-spin" />
                     檢查中...
                   </>
-                ) : (
-                  <>
-                    <ReloadIcon className="mr-2 h-4 w-4" />
-                    重試連接
-                  </>
-                )}
+                ) : "重新檢查連接"}
               </Button>
-            )}
-          </div>
-          
-          {!apiStatus.isAvailable && (
-            <div className="text-amber-500 text-sm font-medium mt-1">
-              {apiStatus.message}
             </div>
           )}
-        </CardHeader>
-        
-        <CardContent className="flex-grow overflow-y-auto">
-          <div className="space-y-4">
-            {messages.length === 0 ? (
-              <div className="text-center text-muted-foreground py-12">
-                Send a message to start the conversation
-              </div>
-            ) : (
-              messages.map((message, index) => (
+          
+          {messages.length === 0 ? (
+            <SecureSuggestions onSuggestionClick={handleSuggestionClick} />
+          ) : (
+            <div className="space-y-4">
+              {messages.map((message, index) => (
                 <div 
                   key={index} 
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
@@ -373,21 +366,20 @@ export default function ChatPage() {
                     <div className="whitespace-pre-wrap">{message.content}</div>
                   </div>
                 </div>
-              ))
-            )}
-
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-lg p-4 bg-muted">
-                  <div className="flex space-x-2">
-                    <div className="h-2 w-2 bg-current rounded-full animate-bounce" />
-                    <div className="h-2 w-2 bg-current rounded-full animate-bounce delay-100" />
-                    <div className="h-2 w-2 bg-current rounded-full animate-bounce delay-200" />
+              ))}
+              {isLoading && (
+                <div className="flex justify-start">
+                  <div className="max-w-[80%] rounded-lg p-4 bg-muted">
+                    <div className="flex space-x-2">
+                      <div className="h-2 w-2 bg-current rounded-full animate-bounce" />
+                      <div className="h-2 w-2 bg-current rounded-full animate-bounce delay-100" />
+                      <div className="h-2 w-2 bg-current rounded-full animate-bounce delay-200" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </CardContent>
         
         <CardFooter className="border-t p-4">
@@ -411,7 +403,7 @@ export default function ChatPage() {
             >
               {isLoading ? 
                 <ReloadIcon className="h-4 w-4 animate-spin" /> : 
-                "Send"
+                "發送"
               }
             </Button>
           </div>
